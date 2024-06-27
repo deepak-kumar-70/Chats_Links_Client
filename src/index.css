@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+  
+  *::-webkit-scrollbar {
+    width: 3px;
+   
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: #8c8a8a; 
+    border-radius: 9999px; 
+   
+  }
+  
+  .triangle-box {
+    position: relative;
+   
+    
+  }
+
+  .triangle-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0px 0 10px 10px; 
+    border-color: transparent transparent transparent #D9FDD3;
+  }
+ 
+  .triangle-box-left {
+    position: relative;
+   
+    
+  }
+
+  .triangle-box-left::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right:100%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 10px 0 0; 
+    border-color: #fff transparent transparent transparent;
+    transform: rotate(90deg);
+  }

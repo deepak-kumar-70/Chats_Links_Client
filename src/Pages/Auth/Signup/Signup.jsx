@@ -32,8 +32,8 @@ const Signup = () => {
 
       if (response.ok) {
         setMessage('Account created successfully');
-        localStorage.setItem("user_id",result.user._id);
-        localStorage.setItem("token", result.token);
+        // localStorage.setItem("user_id",result.user._id);
+        // localStorage.setItem("token", result.token);
         setNotification({ success: true, message: "acccount created succefull" }); 
         setTimeout(() => {
           navigate('/');

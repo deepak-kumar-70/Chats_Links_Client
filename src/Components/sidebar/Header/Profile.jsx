@@ -1,6 +1,7 @@
 import useGetApi from "../../api";
+import { useSelector } from "react-redux";
 const Profile = () => {
-  const user_id= localStorage.getItem('user_id')
+  const user_id=  useSelector((state)=>state.senderId)
   const apiUrl =  `http://localhost:3001/user/getmyprofile/${user_id}`;
 const {data}=useGetApi(apiUrl)
   return (

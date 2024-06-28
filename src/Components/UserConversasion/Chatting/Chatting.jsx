@@ -9,7 +9,7 @@ const Chattine = () => {
   const [userData, setUserData] = useState([]);
   const [combinedData, setCombinedData] = useState([]);
 
-  const senderId = localStorage.getItem("user_id");
+  const senderId = useSelector((state)=>state.senderId)
   const receiverId = useSelector((state) => state.receiverId);
   const socketMessage = useSelector((state) => state.socketMessage);
   const chatContainerRef = useRef(null);

@@ -11,12 +11,18 @@ const Home = () => {
   const { windowWidth, isSmallScreen, isLargeScreen } = useWindowWidth();
   const receiverId = useSelector((state) => state.receiverId);
   useEffect(() => {
-    const senderId = localStorage.getItem("user_id");
-    if (senderId) {
-      dispatch(handleSenderId(senderId));
-    } else {
-      navigate("/singnup");
+    try {
+      const senderId ='666e9ab2ccf05df7d5fa48ae';
+      if (senderId) {
+        dispatch(handleSenderId(senderId));
+      } else {
+        navigate("/singnup");
+      }
+    } catch (error) {
+      console.log(error)
     }
+    
+    
   }, []);
   return (
     <div className="w-full fixed  bg-primary-hover h-screen flex ">

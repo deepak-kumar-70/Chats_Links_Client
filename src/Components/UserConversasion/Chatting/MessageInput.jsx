@@ -18,8 +18,7 @@ const MessageInput = ({ showEmoji }) => {
   const onlineStatus = useSelector((state) => state.userOnlineStatus);
   const receiverId = useSelector((state) => state.receiverId);
   const dispatch = useDispatch();
-  const senderId = localStorage.getItem("user_id");
-
+  const senderId = useSelector((state)=>state.senderId)
   useEffect(() => {
     const handleMessage = (msgData) => {
       dispatch(handleSocketMessage(msgData));

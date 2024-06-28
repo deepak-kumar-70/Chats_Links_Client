@@ -10,7 +10,7 @@ const ChatUsers = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const searchUser = useSelector((state) => state.searchVal);
-  const senderId = localStorage.getItem("user_id");
+  const senderId = useSelector((state)=>state.senderId)
   console.log(senderId,'sen')
   const apiUrl = `http://localhost:3001/user/contactedUser/${senderId}`;
   const { data } = useGetApi(apiUrl);

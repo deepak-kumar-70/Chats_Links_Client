@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { useEffect } from "react";
 import io from "socket.io-client";
-const senderId = localStorage.getItem("user_id");
+
 const socket = io(`http://localhost:3001/`);
 
 

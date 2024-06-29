@@ -12,7 +12,7 @@ const ChatUsers = () => {
   const searchUser = useSelector((state) => state.searchVal);
   const senderId = useSelector((state)=>state.senderId)
   console.log(senderId,'sen')
-  const apiUrl = `http://localhost:3001/user/contactedUser/${senderId}`;
+  const apiUrl = `https://chat-link-server.onrender.com/user/contactedUser/${senderId}`;
   const { data } = useGetApi(apiUrl);
   const searchBack=useSelector((state)=>state.serchBack)
   const onlineStatus=useSelector((state)=>state.userOnlineStatus)
@@ -20,7 +20,7 @@ const ChatUsers = () => {
    
     if (data && data.length > 0) {
       const fetchProfile = async (id) => {
-        const profileUrl = `http://localhost:3001/user/getmyprofile/${id}`;
+        const profileUrl = `https://chat-link-server.onrender.com/user/getmyprofile/${id}`;
         try {
           const response = await fetch(profileUrl);
           if (!response.ok) {

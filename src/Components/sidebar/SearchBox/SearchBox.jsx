@@ -2,7 +2,7 @@ import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { IoFilterOutline } from "react-icons/io5";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, } from "react-redux";
 import { handleSearchUser } from "../../../Store";
 import { searchBack } from "../../../Store/slice";
 const SearchBox = () => {

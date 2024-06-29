@@ -66,7 +66,8 @@ const Chattine = () => {
           </span>
         </div>
         <div className="text-center w-full flex justify-center items-center mb-4">
-          <div className="flex items-center p-1 bg-[#FFEECD] gap-3 text-neutral-700 font-thin rounded-md text-[13px]">
+        
+          <div className="flex items-center p-1 bg-[#FFEECD] sm:gap-3 gap-1 text-neutral-700 font-thin rounded-md text-10px sm:text-[13px]">
             <span>
               <IoLockClosedOutline />
             </span>
@@ -88,8 +89,8 @@ const Chattine = () => {
                 <span
                   className={`px-2  max-w-[50%] py-[2px] ${
                     data.senderId === senderId
-                      ? "bg-[#D9FDD3] mr-[40px]"
-                      : "bg-[#fff] ml-[40px]"
+                      ? "bg-[#D9FDD3] sm:mr-[40px] mr-[10px]"
+                      : "bg-[#fff] sm:ml-[40px] ml-[10px]"
                   } rounded-[4px] flex items-center`}
                 >
                   <span className="sm:text-[17px] text-[12px]">{data?.message}</span>
@@ -128,7 +129,7 @@ const Chattine = () => {
           </div>
         ))}
       </div>
-      <div className="absolute inset-0 top-[91%]">
+      <div className="absolute bottom-0 right-0 left-0">
         <MessageInput showEmoji={true} />
       </div>
     </div>

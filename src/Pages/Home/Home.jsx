@@ -12,11 +12,11 @@ const Home = () => {
   const receiverId = useSelector((state) => state.receiverId);
   useEffect(() => {
     try {
-      const senderId ='667f932180714b23cc132086';
+      const senderId =localStorage.getItem('user_id');
       if (senderId) {
         dispatch(handleSenderId(senderId));
       } else {
-        navigate("/singnup");
+        navigate("/login");
       }
     } catch (error) {
       console.log(error)

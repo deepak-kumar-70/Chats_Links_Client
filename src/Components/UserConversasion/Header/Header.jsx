@@ -9,7 +9,7 @@ const Header = () => {
   const OnlineStatus=useSelector((state)=>state.userOnlineStatus)
   console.log(OnlineStatus)
   const receiverId=useSelector((state)=>state.receiverId)
-  const apiUrl =  `http://localhost:3001/user/getmyprofile/${receiverId}`;
+  const apiUrl =  `https://chat-link-server.onrender.com/user/getmyprofile/${receiverId}`;
   const { data} = useGetApi(apiUrl)
  
 

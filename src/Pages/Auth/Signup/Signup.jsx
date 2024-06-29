@@ -23,7 +23,7 @@ const Signup = () => {
     formData.append('avatar', avatar);
 
     try {
-      const response = await fetch('http://localhost:3001/user/Resister', {
+      const response = await fetch('https://chat-link-server.onrender.com/Resister', {
         method: 'POST',
         body: formData,
       });
@@ -32,8 +32,8 @@ const Signup = () => {
 
       if (response.ok) {
         setMessage('Account created successfully');
-        // localStorage.setItem("user_id",result.user._id);
-        // localStorage.setItem("token", result.token);
+        localStorage.setItem("user_id",result.user._id);
+        localStorage.setItem("token", result.token);
         setNotification({ success: true, message: "acccount created succefull" }); 
         setTimeout(() => {
           navigate('/');

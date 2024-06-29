@@ -57,7 +57,7 @@ const MessageInput = ({ showEmoji }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:3001/upload', {
+      const response = await fetch('https://chat-link-server.onrender.com/upload', {
         method: 'POST',
         body: formData,
       });

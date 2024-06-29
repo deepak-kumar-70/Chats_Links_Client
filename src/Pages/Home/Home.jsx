@@ -12,7 +12,7 @@ const Home = () => {
   const receiverId = useSelector((state) => state.receiverId);
   useEffect(() => {
     try {
-      const senderId ='666e9ab2ccf05df7d5fa48ae';
+      const senderId ='667f932180714b23cc132086';
       if (senderId) {
         dispatch(handleSenderId(senderId));
       } else {

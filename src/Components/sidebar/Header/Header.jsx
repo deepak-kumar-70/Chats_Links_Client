@@ -13,8 +13,9 @@ const Header = () => {
   const [profile,setProfile]=useState(false)
   const user_id= useSelector((state)=>state.senderId)
   const [makeGroup,setMakeGroup]=useState(false)
-  const apiUrl =  `http://localhost:3001/user/getmyprofile/${user_id}`;
+  const apiUrl =  `https://chat-link-server.onrender.com/user/getmyprofile/${user_id}`;
   const {  data } = GetApi(apiUrl)
+
   const isProfile=()=>{
     setProfile(!profile)
   }

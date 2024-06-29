@@ -17,7 +17,7 @@ const SearchBox = () => {
 
   const handleSearch=async(event)=>{
    setSearchVal(event.target.value)
-   const url=`http://localhost:3001/user/searchUser?name=${searchVal}`
+   const url=`https://chat-link-server.onrender.com/user/searchUser?name=${searchVal}`
    try {
     const response = await fetch(url);
     if (!response.ok) {

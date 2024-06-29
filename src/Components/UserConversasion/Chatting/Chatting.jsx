@@ -15,7 +15,7 @@ const Chattine = () => {
   const chatContainerRef = useRef(null);
 
   useEffect(() => {
-    const Url = `http://localhost:3001/user/readChat/${senderId}/${receiverId}`;
+    const Url = `https://chat-link-server.onrender.com/user/readChat/${senderId}/${receiverId}`;
 
     const fetchApi = async (url) => {
       try {

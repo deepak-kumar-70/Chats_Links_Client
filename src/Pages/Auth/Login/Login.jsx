@@ -18,7 +18,7 @@ const Login = () => {
     setError(null); // Reset error state before new request
     setNotification(null); // Reset notification state before new request
     try {
-      const response = await fetch("http://localhost:3001/user/Login", {
+      const response = await fetch("https://chat-link-server.onrender.com/user/Login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,8 +34,8 @@ const Login = () => {
 
       const data = await response.json();
       if (data) {
-        // localStorage.setItem("user_id", data.user._id);
-        // localStorage.setItem("token", data.token);
+        localStorage.setItem("user_id", data.user._id);
+        localStorage.setItem("token", data.token);
         setNotification({ success: true, message: "Login successful" }); 
         setTimeout(() => {
           navigate('/');

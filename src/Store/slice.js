@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { useEffect } from "react";
 import io from "socket.io-client";
-
-const socket = io(`https://chat-link-server.onrender.com`);
-
+// https://chat-link-server.onrender.com
+const socket = io(`http://localhost:3001`);
+const backendUrl=`http://localhost:3001`
 
 const initialState = {
     Inputval:'',
@@ -12,7 +12,8 @@ const initialState = {
     senderId:'',
     socketMessage:[],
     serchBack:false,
-    userOnlineStatus:'Offline'
+    userOnlineStatus:'Offline',
+    headerHeight:'0'
 };
 const Slice = createSlice({
   name: "whatsapp",
@@ -41,11 +42,14 @@ const Slice = createSlice({
   },
     OnlineStatus(state,action){
       state.senderId=action.payload
-  }
+  },
+  handleHeaderheaight(state,action){
+    state.headerHeight=action.payload
+  },
   },
 });
 export default Slice.reducer;
-export {socket}
+export {socket, backendUrl}
 export const {
  handleInputVal,
  handleSearchUser,
@@ -55,4 +59,5 @@ export const {
  clearSocketMessages,
  searchBack,
  OnlineStatus,
+ handleHeaderheaight
 }=Slice.actions

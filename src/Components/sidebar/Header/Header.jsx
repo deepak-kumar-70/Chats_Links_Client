@@ -9,11 +9,12 @@ import Profile from "./Profile";
 import { useState } from "react";
 import SearchBox from "../SearchBox/SearchBox";
 import { useSelector } from "react-redux";
+import { backendUrl } from "../../../Store/slice";
 const Header = () => {
   const [profile,setProfile]=useState(false)
   const user_id= useSelector((state)=>state.senderId)
   const [makeGroup,setMakeGroup]=useState(false)
-  const apiUrl =  `https://chat-link-server.onrender.com/user/getmyprofile/${user_id}`;
+  const apiUrl =  `${backendUrl}/user/getmyprofile/${user_id}`;
   const {  data } = GetApi(apiUrl)
 
   const isProfile=()=>{

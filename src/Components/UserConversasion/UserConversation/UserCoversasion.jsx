@@ -12,11 +12,8 @@ const UserCoversasion = () => {
   return (
     <div>
     {
-      receiverId?
-      <div>
-      <Header/>
-      <Chattine/>
-      </div>:
+      
+     
       <div><WhatsappWindow/></div>
     }
     

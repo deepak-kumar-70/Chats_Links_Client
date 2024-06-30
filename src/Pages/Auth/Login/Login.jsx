@@ -1,7 +1,7 @@
 import  { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Notify from "../../../Components/component/Notify";
-
+import { backendUrl } from "../../../Store/slice";
 const Login = () => {
   const [mobile, setMobileNumber] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +18,7 @@ const Login = () => {
     setError(null); // Reset error state before new request
     setNotification(null); // Reset notification state before new request
     try {
-      const response = await fetch("https://chat-link-server.onrender.com/user/Login", {
+      const response = await fetch(`${backendUrl}/user/Login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,8 +1,9 @@
 import useGetApi from "../../api";
 import { useSelector } from "react-redux";
+import { backendUrl } from "../../../Store/slice";
 const Profile = () => {
   const user_id=  useSelector((state)=>state.senderId)
-  const apiUrl =  `https://chat-link-server.onrender.com/user/getmyprofile/${user_id}`;
+  const apiUrl =  `${backendUrl}/user/getmyprofile/${user_id}`;
 const {data}=useGetApi(apiUrl)
   return (
     <div className="w-[32%] absolute inset-0 h-[70vh] bg-slate-800 z-50 left-10 flex rounded-lg mt-10 shadow-xl overflow-hidden">

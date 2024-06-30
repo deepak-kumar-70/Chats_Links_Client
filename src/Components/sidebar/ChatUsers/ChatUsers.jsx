@@ -5,6 +5,8 @@ import { clearSocketMessages, handleReceiverId, handleSocketMessage } from "../.
 import useGetApi from "../../api";
 import { socket } from "../../../Store/slice";
 import { OnlineStatus } from "../../../Store/slice";
+import { backendUrl } from "../../../Store/slice";
+import { Link } from "react-router-dom";
 const ChatUsers = () => {
   const [profile, setProfiles] = useState([]);
   const [error, setError] = useState(null);
@@ -12,7 +14,7 @@ const ChatUsers = () => {
   const searchUser = useSelector((state) => state.searchVal);
   const senderId = useSelector((state)=>state.senderId)
   console.log(senderId,'sen')
-  const apiUrl = `https://chat-link-server.onrender.com/user/contactedUser/${senderId}`;
+  const apiUrl = `${backendUrl}/${senderId}`;
   const { data } = useGetApi(apiUrl);
   const searchBack=useSelector((state)=>state.serchBack)
   const onlineStatus=useSelector((state)=>state.userOnlineStatus)
@@ -20,7 +22,7 @@ const ChatUsers = () => {
    
     if (data && data.length > 0) {
       const fetchProfile = async (id) => {
-        const profileUrl = `https://chat-link-server.onrender.com/user/getmyprofile/${id}`;
+        const profileUrl = `${backendUrl}/user/getmyprofile/${id}`;
         try {
           const response = await fetch(profileUrl);
           if (!response.ok) {
@@ -82,9 +84,11 @@ const UserProfile = ({ user, handleUserChatting }) => {
   const receiverId = useSelector((state) => state.receiverId);
 
   return (
+    <Link to={`/chat?=?${user?._id}`}>
     <div
       onClick={() => handleUserChatting(user?._id)}
-      className={`flex items-center justify-between px-5 py-3 mb-2 cursor-pointer hover:bg-neutral-100 ${
+      
+      className={`flex items-center justify-between sm:px-5 px-2 py-3 mb-2 cursor-pointer hover:bg-neutral-100 ${
         receiverId === user?._id && 'bg-neutral-200 hover:bg-neutral-200 rounded-lg'
       }`}
     >
@@ -119,6 +123,7 @@ const UserProfile = ({ user, handleUserChatting }) => {
         </div>
       </div>
     </div>
+    </Link>
   );
 };
 

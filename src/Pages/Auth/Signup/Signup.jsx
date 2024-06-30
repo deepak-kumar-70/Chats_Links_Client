@@ -1,6 +1,7 @@
 import  { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Notify from '../../../Components/component/Notify';
+import { backendUrl } from '../../../Store/slice';
 const Signup = () => {
   const [name, setName] = useState('');
   const [mobile, setMobile] = useState('');
@@ -23,7 +24,7 @@ const Signup = () => {
     formData.append('avatar', avatar);
 
     try {
-      const response = await fetch('https://chat-link-server.onrender.com/Resister', {
+      const response = await fetch(`${backendUrl}/Resister`, {
         method: 'POST',
         body: formData,
       });

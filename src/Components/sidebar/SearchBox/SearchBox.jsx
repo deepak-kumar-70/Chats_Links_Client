@@ -5,6 +5,7 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import { useDispatch, } from "react-redux";
 import { handleSearchUser } from "../../../Store";
 import { searchBack } from "../../../Store/slice";
+import { backendUrl } from "../../../Store/slice";
 const SearchBox = () => {
   const [searchActive, setSearchActive] = useState(false);
   const [searchVal,setSearchVal]=useState('');
@@ -17,7 +18,7 @@ const SearchBox = () => {
 
   const handleSearch=async(event)=>{
    setSearchVal(event.target.value)
-   const url=`https://chat-link-server.onrender.com/user/searchUser?name=${searchVal}`
+   const url=`${backendUrl}/user/searchUser?name=${searchVal}`
    try {
     const response = await fetch(url);
     if (!response.ok) {

@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { socket } from "../../../Store";
+import { backendUrl } from "../../../Store/slice";
 const Chattine = () => {
   const [userData, setUserData] = useState([]);
   const [combinedData, setCombinedData] = useState([]);
@@ -12,10 +13,12 @@ const Chattine = () => {
   const senderId = useSelector((state)=>state.senderId)
   const receiverId = useSelector((state) => state.receiverId);
   const socketMessage = useSelector((state) => state.socketMessage);
+  const headerHeight=useSelector((state)=>state.headerHeight)
   const chatContainerRef = useRef(null);
 
   useEffect(() => {
-    const Url = `https://chat-link-server.onrender.com/user/readChat/${senderId}/${receiverId}`;
+    console.log(headerHeight,'headerheight')
+    const Url = `${backendUrl}/user/readChat/${senderId}/${receiverId}`;
 
     const fetchApi = async (url) => {
       try {
@@ -56,19 +59,21 @@ const Chattine = () => {
 
   return (
     <div
-      className="sm:w-[75%] w-full h-[91vh] bg-slate-100 bg-contain fixed flex flex-col justify-between"
+      className="sm:w-[75%] w-full h-[91vh] bg-slate-100 bg-contain fixed flex flex-col justify-between sm:px-7 px-2"
       style={{ backgroundImage: `url(${wallpaper})` }}
     >
       <div ref={chatContainerRef} className="overflow-y-auto h-[82vh]">
-        <div className="w-full flex justify-center mt-4 mb-4">
-          <span className="bg-neutral-200 px-2 py-1 text-[14px] text-neutral-500 rounded-sm">
+        <div className="w-full flex justify-center sm:mt-4 sm:mb-4 mt-2 mb-2">
+          <span className="bg-neutral-200 px-2 py-1 sm:text-[14px] text-[11px] text-neutral-500 rounded-sm">
             20-9-2023
           </span>
         </div>
-        <div className="text-center w-full flex justify-center items-center mb-4">
+        <div className="text-center w-full flex justify-center items-center sm:mb-4 mb-2">
         
-          <div className="flex items-center p-1 bg-[#FFEECD] sm:gap-3 gap-1 text-neutral-700 font-thin rounded-md text-10px sm:text-[13px]">
-            <span>
+          <div className="flex items-center p-1 bg-[#FFEECD] sm:gap-3 gap-1
+          font-semibold leading-[13px]
+           text-neutral-700 sm:font-thin rounded-md text-[9px] sm:text-[13px]">
+            <span className="">
               <IoLockClosedOutline />
             </span>
             <span>
@@ -87,19 +92,19 @@ const Chattine = () => {
                 } mt-1`}
               >
                 <span
-                  className={`px-2  max-w-[50%] py-[2px] ${
+                  className={`sm:px-2  px-2 max-w-[50%] sm:py-[2px] py-[1px]  ${
                     data.senderId === senderId
-                      ? "bg-[#D9FDD3] sm:mr-[40px] mr-[10px]"
-                      : "bg-[#fff] sm:ml-[40px] ml-[10px]"
+                      ? "bg-[#D9FDD3] "
+                      : "bg-[#fff]"
                   } rounded-[4px] flex items-center`}
                 >
                   <span className="sm:text-[17px] text-[12px]">{data?.message}</span>
-                  <span className="flex items-center gap-2 ml-5 mt-4">
-                    <span className="text-[10px] text-neutral-500">
+                  <span className="flex items-center sm:gap-2 gap-1 sm:ml-5 ml-1 sm:mt-4 mt-1">
+                    <span className="sm:text-[10px] text-[8px] text-neutral-500">
                       {formatTime(data.createdAt)}
                     </span>
                     {data.senderId === senderId && (
-                      <span className="text-blue-600">
+                      <span className="text-blue-600 sm:text-[15px] text-[12px]">
                         <IoCheckmarkDone />
                       </span>
                     )}
@@ -115,9 +120,9 @@ const Chattine = () => {
                 }`}
               >
                 <div
-                  className={`mr-[40px] ml-[40px] max-h-[350px] 
+                  className={` max-h-[350px] 
  ${data.senderId === senderId ? "bg-[#D9FDD3] " : "bg-[#fff]"}
- p-2 overflow-hidden rounded-lg max-w-[350px] `}
+ p-2 overflow-hidden rounded-lg sm:max-w-[350px] max-w-[180px]`}
                 >
                   <img
                     src={data?.attachment}

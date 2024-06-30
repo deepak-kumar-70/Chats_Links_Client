@@ -8,7 +8,7 @@ import { VscSend } from "react-icons/vsc";
 import { socket } from "../../../Store";
 import { useSelector, useDispatch } from "react-redux";
 import { OnlineStatus, handleSocketMessage } from "../../../Store/slice";
-
+import { backendUrl } from "../../../Store/slice";
 const MessageInput = ({ showEmoji }) => {
   const [isEmojiVisible, setEmojiVisible] = useState(false);
   const [message, setMessage] = useState("");
@@ -57,7 +57,7 @@ const MessageInput = ({ showEmoji }) => {
     }
 
     try {
-      const response = await fetch('https://chat-link-server.onrender.com/upload', {
+      const response = await fetch(`${backendUrl}/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -95,8 +95,8 @@ const MessageInput = ({ showEmoji }) => {
   };
 
   return (
-    <div className="w-full px-5 py-3 bg-white border-t-[1px] border-t-neutral-300 flex items-center justify-between">
-      <div className="flex items-center gap-7 w-[90%] cursor-pointer">
+    <div className="w-full sm:px-5 px-2 sm:py-3 py-2 bg-white border-t-[1px] border-t-neutral-300 flex items-center justify-between">
+      <div className="flex items-center sm:gap-7 gap-2 w-[90%] cursor-pointer">
         {showEmoji && (
           <span onClick={() => setEmojiVisible(!isEmojiVisible)}>
             <BsEmojiSmile />
@@ -164,7 +164,7 @@ const MessageInput = ({ showEmoji }) => {
             <VscSend />
           </span>
         ) : (
-          <span className="text-xl text-neutral-800">
+          <span className="sm:text-xl  text-neutral-800">
             <LuMic />
           </span>
         )}

@@ -2,8 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { useEffect } from "react";
 import io from "socket.io-client";
 // https://chat-link-server.onrender.com
-const socket = io(`http://localhost:3001`);
-const backendUrl=`http://localhost:3001`
+// http://localhost:3001
+const socket = io(` https://chat-link-server.onrender.com`);
+const backendUrl=` https://chat-link-server.onrender.com`
 
 const initialState = {
     Inputval:'',

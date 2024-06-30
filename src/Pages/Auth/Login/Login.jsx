@@ -48,18 +48,18 @@ const Login = () => {
   };
 
   return (
-    <div className="relative flex items-center justify-center w-full h-[90vh] gap-64">
+    <div className="relative flex items-center justify-center w-full h-[90vh] sm:gap-64">
       {notification && (
         <Notify success={notification.success} message={notification.message} />
       )}
-      <div>
+      <div className="sm:block hidden">
         <img
           className="h-[80vh]"
           src="http://productivealliance.com/static/media/FAQ.05b518db2ed89321c4e9.jpg"
           alt="FAQ"
         />
       </div>
-      <div className="flex flex-col items-center w-[25%] px-5 py-5 bg-white border-2  border-neutral-300 rounded-lg z-50 h-[64vh] gap-6">
+      <div className="flex flex-col items-center sm:w-[25%] w-[90%] px-5 py-5 bg-white border-2  border-neutral-300 rounded-lg z-50 h-[64vh] gap-6">
         <div className="text-3xl font-bold text-center mb-2">
           <h4>Login</h4>
         </div>

@@ -5,7 +5,8 @@ import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { socket } from "../../../Store";
-import { backendUrl } from "../../../Store/slice";
+import { backendUrl, handleReceiverId } from "../../../Store/slice";
+import { useDispatch } from "react-redux";
 const Chattine = () => {
   const [userData, setUserData] = useState([]);
   const [combinedData, setCombinedData] = useState([]);
@@ -15,7 +16,7 @@ const Chattine = () => {
   const socketMessage = useSelector((state) => state.socketMessage);
   const headerHeight=useSelector((state)=>state.headerHeight)
   const chatContainerRef = useRef(null);
-
+ const dispath=useDispatch()
   useEffect(() => {
     console.log(headerHeight,'headerheight')
     const Url = `${backendUrl}/user/readChat/${senderId}/${receiverId}`;
@@ -36,6 +37,11 @@ const Chattine = () => {
     if (receiverId) {
       fetchApi(Url);
     }
+    const id = new URLSearchParams(window.location.search).get('id');
+    if(id){
+      dispath(handleReceiverId(id))
+    }
+    console.log(id, 'idloc');
   }, [senderId, receiverId]);
 
   useEffect(() => {
@@ -59,10 +65,10 @@ const Chattine = () => {
 
   return (
     <div
-      className="sm:w-[75%] w-full h-[91vh] bg-slate-100 bg-contain fixed flex flex-col justify-between sm:px-7 px-2"
+     className="flex flex-col h-screen bg-slate-100 bg-cover"
       style={{ backgroundImage: `url(${wallpaper})` }}
     >
-      <div ref={chatContainerRef} className="overflow-y-auto h-[82vh]">
+      <div ref={chatContainerRef} className="overflow-y-auto flex-1  p-2 pb-5">
         <div className="w-full flex justify-center sm:mt-4 sm:mb-4 mt-2 mb-2">
           <span className="bg-neutral-200 px-2 py-1 sm:text-[14px] text-[11px] text-neutral-500 rounded-sm">
             20-9-2023
@@ -134,7 +140,7 @@ const Chattine = () => {
           </div>
         ))}
       </div>
-      <div className="absolute bottom-0 right-0 left-0">
+      <div className="sticky bottom-0 right-0 left-0">
         <MessageInput showEmoji={true} />
       </div>
     </div>

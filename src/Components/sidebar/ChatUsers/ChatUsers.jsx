@@ -84,7 +84,7 @@ const UserProfile = ({ user, handleUserChatting }) => {
   const receiverId = useSelector((state) => state.receiverId);
 
   return (
-    <Link to={`/chat?=?${user?._id}`}>
+    <Link to={`/chat?id=${user?._id}`}>
     <div
       onClick={() => handleUserChatting(user?._id)}
       

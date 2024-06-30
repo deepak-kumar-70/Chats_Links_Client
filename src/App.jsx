@@ -22,7 +22,7 @@ const App = () => {
                 <div className="h-full sm:block hidden sm:w-[25%] w-full ">
                   <Sidebar />
                 </div>
-                <div className="h-full w-[75%] bg-slate-400">
+                <div className="h-full sm:w-[75%] w-full bg-slate-400">
                   <Header />
                   <Chattine />
                 </div>

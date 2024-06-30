@@ -10,7 +10,9 @@ const Home = () => {
   const navigate = useNavigate();
   const { windowWidth, isSmallScreen, isLargeScreen } = useWindowWidth();
   const receiverId = useSelector((state) => state.receiverId);
+
   useEffect(() => {
+  
     try {
       const senderId = localStorage.getItem("user_id");
       if (senderId) {
@@ -21,7 +23,7 @@ const Home = () => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [receiverId]);
   return (
     <div className="w-full fixed  bg-primary-hover h-screen flex ">
       {isSmallScreen ? (

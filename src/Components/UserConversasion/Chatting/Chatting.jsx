@@ -65,10 +65,10 @@ const Chattine = () => {
 
   return (
     <div
-     className="flex flex-col h-screen bg-slate-100 bg-cover"
+     className="flex flex-col h-[92vh] bg-slate-100 bg-cover"
       style={{ backgroundImage: `url(${wallpaper})` }}
     >
-      <div ref={chatContainerRef} className="overflow-y-auto flex-1  p-2 pb-5">
+      <div ref={chatContainerRef} className="overflow-y-auto flex-1  p-2 h-[80vh]">
         <div className="w-full flex justify-center sm:mt-4 sm:mb-4 mt-2 mb-2">
           <span className="bg-neutral-200 px-2 py-1 sm:text-[14px] text-[11px] text-neutral-500 rounded-sm">
             20-9-2023

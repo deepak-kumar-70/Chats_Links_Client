@@ -14,7 +14,7 @@ const ChatUsers = () => {
   const searchUser = useSelector((state) => state.searchVal);
   const senderId = useSelector((state)=>state.senderId)
   console.log(senderId,'sen')
-  const apiUrl = `${backendUrl}/${senderId}`;
+  const apiUrl = `${backendUrl}/user/contactedUser/${senderId}`;
   const { data } = useGetApi(apiUrl);
   const searchBack=useSelector((state)=>state.serchBack)
   const onlineStatus=useSelector((state)=>state.userOnlineStatus)

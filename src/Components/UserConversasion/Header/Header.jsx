@@ -36,7 +36,7 @@ const Header = () => {
           <div
           ref={divRef}
             key={user.id}
-            className="flex sm:h-[9.4vh] h-[8vh] items-center justify-between sm:px-5  cursor-pointer bg-[#fff] border-t-[1px] border-t-neutral-300"
+            className="flex px-2 sm:h-[9.4vh] h-[8vh] items-center justify-between sm:px-5  cursor-pointer bg-[#fff] border-t-[1px] border-t-neutral-300"
           >
             <div className="flex items-center sm:gap-5 gap-2">
             <Link to='/' className="text-[1rem]  sm:hidden block">

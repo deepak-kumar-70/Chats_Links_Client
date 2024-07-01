@@ -37,14 +37,10 @@ const Chattine = () => {
     if (receiverId) {
       fetchApi(Url);
     }
-    const id = new URLSearchParams(window.location.search).get('id');
-    if(id){
-      dispath(handleReceiverId(id))
-    }
-    console.log(id, 'idloc');
   }, [senderId, receiverId]);
 
   useEffect(() => {
+    console.log(socketMessage,'sm')
     setCombinedData([...userData, ...socketMessage]);
     socket.on("messageTick", (data) => {
       console.log(data, "tick");
@@ -52,7 +48,7 @@ const Chattine = () => {
   }, [socketMessage, userData]);
 
   useEffect(() => {
-    // Scroll to bottom whenever combinedData changes
+   
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
@@ -65,10 +61,10 @@ const Chattine = () => {
 
   return (
     <div
-     className="flex flex-col h-[92vh] bg-slate-100 bg-cover"
+     className="flex flex-col h-[91vh] bg-slate-100 bg-cover"
       style={{ backgroundImage: `url(${wallpaper})` }}
     >
-      <div ref={chatContainerRef} className="overflow-y-auto flex-1  p-2 h-[80vh]">
+      <div ref={chatContainerRef} className="overflow-y-auto flex-1  p-2 pb-4">
         <div className="w-full flex justify-center sm:mt-4 sm:mb-4 mt-2 mb-2">
           <span className="bg-neutral-200 px-2 py-1 sm:text-[14px] text-[11px] text-neutral-500 rounded-sm">
             20-9-2023
@@ -98,13 +94,13 @@ const Chattine = () => {
                 } mt-1`}
               >
                 <span
-                  className={`sm:px-2  px-2 max-w-[50%] sm:py-[2px] py-[1px]  ${
+                  className={`sm:px-2  px-[10px] max-w-[68%] sm:py-[2px] py-[5px]  ${
                     data.senderId === senderId
                       ? "bg-[#D9FDD3] "
                       : "bg-[#fff]"
                   } rounded-[4px] flex items-center`}
                 >
-                  <span className="sm:text-[17px] text-[12px]">{data?.message}</span>
+                  <span className="sm:text-[17px] text-[14px]">{data?.message}</span>
                   <span className="flex items-center sm:gap-2 gap-1 sm:ml-5 ml-1 sm:mt-4 mt-1">
                     <span className="sm:text-[10px] text-[8px] text-neutral-500">
                       {formatTime(data.createdAt)}
@@ -128,7 +124,7 @@ const Chattine = () => {
                 <div
                   className={` max-h-[350px] 
  ${data.senderId === senderId ? "bg-[#D9FDD3] " : "bg-[#fff]"}
- p-2 overflow-hidden rounded-lg sm:max-w-[350px] max-w-[180px]`}
+ sm:p-2 p-1 overflow-hidden rounded-lg sm:max-w-[350px] max-w-[220px]`}
                 >
                   <img
                     src={data?.attachment}

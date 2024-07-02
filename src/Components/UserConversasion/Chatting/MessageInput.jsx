@@ -15,7 +15,7 @@ const MessageInput = ({ showEmoji }) => {
   const [isDocumentVisible, setDocumentVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [file, setFile] = useState(null);
-  const onlineStatus = useSelector((state) => state.userOnlineStatus);
+  // const onlineStatus = useSelector((state) => state.userOnlineStatus);
   const receiverId = useSelector((state) => state.receiverId);
   const dispatch = useDispatch();
   const senderId = useSelector((state)=>state.senderId)
@@ -25,7 +25,6 @@ const MessageInput = ({ showEmoji }) => {
     };
 
     const handleUserStatus = (data) => {
-      console.log(data.status, "on");
       dispatch(OnlineStatus(data?.status));
     };
 
@@ -44,7 +43,16 @@ const MessageInput = ({ showEmoji }) => {
     setMessage((prevText) => prevText + emoji);
     setEmojiVisible(false);
   };
-
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFile(file);
+      setDocumentVisible(false);
+      const imageURL = URL.createObjectURL(file);
+      setSelectedImage(imageURL);
+    }
+    console.log(file,senderId,'fi')
+  };
   const sendMessage = async () => {
     if (!message && !file) return;
 
@@ -52,8 +60,10 @@ const MessageInput = ({ showEmoji }) => {
     formData.append('message', message);
     formData.append('receiverId', receiverId);
     formData.append('senderId', senderId);
+    console.log(file,senderId,'fil')
     if (file) {
       formData.append('attachment', file);
+     
     }
 
     try {
@@ -84,15 +94,7 @@ const MessageInput = ({ showEmoji }) => {
     socket.emit("typing", { val: e.target.value, receiverId });
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFile(file);
-      setDocumentVisible(false);
-      const imageURL = URL.createObjectURL(file);
-      setSelectedImage(imageURL);
-    }
-  };
+ 
 
   return (
     <div className="w-full sm:px-5 px-2 sm:py-3 py-2 bg-white border-t-[1px] border-t-neutral-300 flex items-center justify-between">

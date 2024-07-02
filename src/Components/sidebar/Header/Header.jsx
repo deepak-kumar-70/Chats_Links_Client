@@ -10,6 +10,7 @@ import { useState } from "react";
 import SearchBox from "../SearchBox/SearchBox";
 import { useSelector } from "react-redux";
 import { backendUrl } from "../../../Store/slice";
+import { Link } from "react-router-dom";
 const Header = () => {
   const [profile,setProfile]=useState(false)
   const user_id= useSelector((state)=>state.senderId)
@@ -26,13 +27,13 @@ const Header = () => {
   return (
     <div className="w-full h-[66px] py-4 px-5 bg-[#fff] flex items-center justify-between border-b-[1px] border-b-neutral-300 border-t-[1px] border-t-neutral-300">
       <div>
-     <div onClick={isProfile}><img
+     <Link to={`/?Profile?=${data?.user._id}`} onClick={isProfile}><img
         src={data?.user.avatar}
         className='h-[40px] w-[40px] rounded-full object-cover cursor-pointer' />
-       </div>
+       </Link>
      {
-      profile&&
-      <div className="z-10"><Profile/></div>
+      profile &&
+      <div className="z-10"><Profile  setProfile={setProfile}/></div>
      }
       
        

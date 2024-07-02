@@ -8,12 +8,7 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [notification, setNotification] = useState(null); // State for notification
   const navigate = useNavigate();
-  useEffect(()=>{
-    const senderId= localStorage.getItem('user_id')
-    if(!senderId){
-     alert('please login to access all routes')
-    }
-  },[])
+ 
   const handleLogin = async () => {
     setError(null); // Reset error state before new request
     setNotification(null); // Reset notification state before new request
@@ -50,7 +45,7 @@ const Login = () => {
   return (
     <div className="relative flex items-center justify-center w-full h-[90vh] sm:gap-64">
       {notification && (
-        <Notify success={notification.success} message={notification.message} />
+        <Notify  success={notification.success} message={notification.message} />
       )}
       <div className="sm:block hidden">
         <img
@@ -97,7 +92,7 @@ const Login = () => {
         </div>
         <div>
           <span className="text-neutral-600 text-[14px]">Not a member?</span>
-          <Link className="text-blue-700 text-[14px]" to='/'>Signup</Link>
+          <Link className="text-blue-700 text-[14px]" to='/singnup'>Signup</Link>
         </div>
       </div>
     </div>

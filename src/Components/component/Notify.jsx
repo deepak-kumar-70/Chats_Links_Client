@@ -33,7 +33,7 @@ const Notify = ({ success,  message }) => {
           delay: 0.1,
           duration: 0.5,
         }}
-        className={`h-[110px] top-10 absolute inset-0 border left-[40%] z-[10000] w-[400px] bg-white rounded-lg shadow-lg px-4 py-4
+        className={`h-[110px] top-10 hidden sm:block left-[15%] absolute inset-0 border sm:left-[40%] z-[10000] sm:w-[400px]  bg-white rounded-lg shadow-lg px-4 py-4
           ${success ? 'border-green-600' : 'border-red-600'}
           `}
       >

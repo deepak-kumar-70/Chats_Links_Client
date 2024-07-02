@@ -1,5 +1,5 @@
 import  { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Notify from '../../../Components/component/Notify';
 import { backendUrl } from '../../../Store/slice';
 const Signup = () => {
@@ -24,7 +24,7 @@ const Signup = () => {
     formData.append('avatar', avatar);
 
     try {
-      const response = await fetch(`${backendUrl}/Resister`, {
+      const response = await fetch(`${backendUrl}/user/Resister`, {
         method: 'POST',
         body: formData,
       });
@@ -52,12 +52,12 @@ const Signup = () => {
   return (
     <div className="w-full relative h-[90vh] flex justify-center gap-64 items-center">
     {notification && (
-      <Notify success={notification.success} message={notification.message} />
+      <Notify  success={notification.success} message={notification.message} />
     )}
-      <div>
+      <div className='sm:block hidden'>
         <img className="h-[80vh]" src="http://productivealliance.com/static/media/FAQ.05b518db2ed89321c4e9.jpg" alt="Signup" />
       </div>
-      <div className="px-5 w-[25%] bg-white z-50 border-neutral-300 border-2 h-[66vh] py-5 rounded-lg flex flex-col gap-7">
+      <div className="px-5 sm:w-[25%] w-[90%]  bg-white z-50 border-neutral-300 border-2 h-[66vh] py-5 rounded-lg flex flex-col gap-7">
         <div className="text-center mb-2 text-2xl font-semibold">
           <h4>Contact with us</h4>
         </div>
@@ -101,6 +101,10 @@ const Signup = () => {
               Submit
             </button>
           </div>
+          <div>
+          <span className="text-neutral-600 text-[14px]">Already have acccount?</span>
+          <Link className="text-blue-700 text-[14px]" to='/login'>Login</Link>
+        </div>
         </form>
         {message && <div className="text-center mt-2 text-red-500">{message}</div>}
       </div>

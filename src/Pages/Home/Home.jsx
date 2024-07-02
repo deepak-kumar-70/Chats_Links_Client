@@ -18,7 +18,7 @@ const Home = () => {
       if (senderId) {
         dispatch(handleSenderId(senderId));
       } else {
-        navigate("/login");
+        navigate("/login") || navigate("/singnup");
       }
     } catch (error) {
       console.log(error);

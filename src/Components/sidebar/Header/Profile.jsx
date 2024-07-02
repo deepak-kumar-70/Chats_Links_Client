@@ -14,7 +14,7 @@ const handleLogOut=({setProfile})=>{
   localStorage.removeItem('token')
 }
   return (
-    <div className="sm:w-[32%] w-full absolute sm:inset-0 top-0 left-0 sm:h-[70vh] h-full bg-slate-800 z-50 sm:left-10 flex rounded-lg sm:mt-10 shadow-xl overflow-hidden">
+    <div className="sm:w-[32%] w-full absolute sm:inset-0 p-3 top-0 left-0 sm:h-[70vh] h-full z-50 bg-transparent sm:left-10 flex rounded-lg sm:mt-10 shadow-xl overflow-hidden">
       <div className="w-[30%] flex flex-col justify-between bg-neutral-200 h-[100%] p-2">
       <div><Link 
       to='/' 

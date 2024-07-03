@@ -9,18 +9,21 @@ import { socket } from "../../../Store";
 import { useSelector, useDispatch } from "react-redux";
 import { OnlineStatus, handleSocketMessage } from "../../../Store/slice";
 import { backendUrl } from "../../../Store/slice";
+
 const MessageInput = ({ showEmoji }) => {
   const [isEmojiVisible, setEmojiVisible] = useState(false);
   const [message, setMessage] = useState("");
   const [isDocumentVisible, setDocumentVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [file, setFile] = useState(null);
-  // const onlineStatus = useSelector((state) => state.userOnlineStatus);
+  
   const receiverId = useSelector((state) => state.receiverId);
   const dispatch = useDispatch();
-  const senderId = useSelector((state)=>state.senderId)
+  const senderId = useSelector((state) => state.senderId);
+ console.log(senderId,receiverId,'sender')
   useEffect(() => {
     const handleMessage = (msgData) => {
+      console.log(msgData,'msg')
       dispatch(handleSocketMessage(msgData));
     };
 
@@ -43,6 +46,7 @@ const MessageInput = ({ showEmoji }) => {
     setMessage((prevText) => prevText + emoji);
     setEmojiVisible(false);
   };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -51,32 +55,32 @@ const MessageInput = ({ showEmoji }) => {
       const imageURL = URL.createObjectURL(file);
       setSelectedImage(imageURL);
     }
-    console.log(file,senderId,'fi')
   };
+
   const sendMessage = async () => {
     if (!message && !file) return;
 
     const formData = new FormData();
-    formData.append('message', message);
-    formData.append('receiverId', receiverId);
-    formData.append('senderId', senderId);
-    console.log(file,senderId,'fil')
+    formData.append("message", message);
+    formData.append("receiverId", receiverId);
+    formData.append("senderId", senderId);
+    
     if (file) {
-      formData.append('attachment', file);
-     
+      formData.append("attachment", file);
     }
 
     try {
       const response = await fetch(`${backendUrl}/upload`, {
-        method: 'POST',
+        method: "POST",
         body: formData,
       });
+      
       const data = await response.json();
       
-    setSelectedImage(null);
+      setSelectedImage(null);
       socket.emit("send message", data);
     } catch (error) {
-      console.error('Error uploading file:', error);
+      console.error("Error uploading file:", error);
     }
 
     setFile(null);
@@ -93,8 +97,6 @@ const MessageInput = ({ showEmoji }) => {
     setMessage(e.target.value);
     socket.emit("typing", { val: e.target.value, receiverId });
   };
-
- 
 
   return (
     <div className="w-full sm:px-5 px-2 sm:py-3 py-2 bg-white border-t-[1px] border-t-neutral-300 flex items-center justify-between">
@@ -166,7 +168,7 @@ const MessageInput = ({ showEmoji }) => {
             <VscSend />
           </span>
         ) : (
-          <span className="sm:text-xl  text-neutral-800">
+          <span className="sm:text-xl text-neutral-800">
             <LuMic />
           </span>
         )}

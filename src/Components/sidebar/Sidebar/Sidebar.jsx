@@ -17,7 +17,7 @@ const Sidebar = () => {
     <div className="border-r-[1px] border-r-neutral-300 ">
     <Header/>
     <SearchBox/>
-    <div className="overflow-y-auto h-[85vh] scrollbar-hidden scrollbar">
+    <div className="overflow-y-auto sm:h-[85vh] h-[71vh] scrollbar-hidden scrollbar pb-10">
     <ChatUsers/>
     
     </div>

@@ -42,12 +42,15 @@ const Header = () => {
             <Link to='/' className="text-[1rem]  sm:hidden block">
              <IoMdArrowBack/>
             </Link>
-              <div>
-                <img
-                  src={data?.user?.avatar}
-                  className={`sm:h-[50px] sm:w-[50px] h-[35px] w-[35px] rounded-full object-cover`}
-                />
-              </div>
+            <Link to='/profile'>
+            <div>
+            <img
+              src={data?.user?.avatar}
+              className={`sm:h-[50px] sm:w-[50px] h-[35px] w-[35px] rounded-full object-cover`}
+            />
+          </div>
+            </Link>
+             
 
               <div>
                 <div>

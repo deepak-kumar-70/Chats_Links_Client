@@ -24,6 +24,7 @@ const Header = () => {
   const OnlineStatus=useSelector((state)=>state.userOnlineStatus)
   console.log(OnlineStatus)
   const receiverId=useSelector((state)=>state.receiverId)
+  const senderId=useSelector((state)=>state.senderId)
   const apiUrl =  `${backendUrl}/user/getmyprofile/${receiverId}`;
   const { data} = useGetApi(apiUrl)
  

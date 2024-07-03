@@ -20,15 +20,20 @@ const MessageInput = ({ showEmoji }) => {
   const receiverId = useSelector((state) => state.receiverId);
   const dispatch = useDispatch();
   const senderId = useSelector((state) => state.senderId);
- console.log(senderId,receiverId,'sender')
+
   useEffect(() => {
     const handleMessage = (msgData) => {
-      console.log(msgData,'msg')
+   
       dispatch(handleSocketMessage(msgData));
     };
 
     const handleUserStatus = (data) => {
-      dispatch(OnlineStatus(data?.status));
+      if(data?.senderId==senderId){
+        dispatch(OnlineStatus('Online'));
+      }else{
+        dispatch(OnlineStatus('Offline'));
+      }
+     
     };
 
     socket.on("userStatus", handleUserStatus);

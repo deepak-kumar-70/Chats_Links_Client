@@ -1,4 +1,4 @@
-import wallpaper from "../../../assets/wallpaper.png";
+import wallpaper from "../../../assets/image/wallpaper.png";
 import { IoLockClosedOutline, IoCheckmarkDone } from "react-icons/io5";
 import MessageInput from "./MessageInput";
 import { useEffect, useState, useRef } from "react";
@@ -18,7 +18,7 @@ const Chattine = () => {
   const chatContainerRef = useRef(null);
  const dispath=useDispatch()
   useEffect(() => {
-    console.log(headerHeight,'headerheight')
+  
     const Url = `${backendUrl}/user/readChat/${senderId}/${receiverId}`;
 
     const fetchApi = async (url) => {

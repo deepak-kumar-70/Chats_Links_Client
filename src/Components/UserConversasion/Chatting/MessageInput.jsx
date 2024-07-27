@@ -7,7 +7,11 @@ import { TfiGallery } from "react-icons/tfi";
 import { VscSend } from "react-icons/vsc";
 import { socket } from "../../../Store";
 import { useSelector, useDispatch } from "react-redux";
-import { OnlineStatus, handleSocketMessage } from "../../../Store/slice";
+import {
+  OnlineStatus,
+  handleSocketMessage,
+  setTyping,
+} from "../../../Store/slice";
 import { backendUrl } from "../../../Store/slice";
 
 const MessageInput = ({ showEmoji }) => {
@@ -16,30 +20,27 @@ const MessageInput = ({ showEmoji }) => {
   const [isDocumentVisible, setDocumentVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [file, setFile] = useState(null);
-  
+
   const receiverId = useSelector((state) => state.receiverId);
   const dispatch = useDispatch();
   const senderId = useSelector((state) => state.senderId);
 
   useEffect(() => {
     const handleMessage = (msgData) => {
-   
       dispatch(handleSocketMessage(msgData));
     };
 
     const handleUserStatus = (data) => {
-      if(data?.senderId==senderId){
-        dispatch(OnlineStatus('Online'));
-      }else{
-        dispatch(OnlineStatus('Offline'));
-      }
-     
+      dispatch(OnlineStatus(data.status));
     };
-
+    const handleTyping = (data) => {
+      dispatch(setTyping(data.val));
+    };
     socket.on("userStatus", handleUserStatus);
-
+    socket.emit("userStatus", { senderId });
     socket.emit("findUser", { senderId, receiverId });
     socket.on("send message", handleMessage);
+    socket.on("typing", handleTyping);
 
     return () => {
       socket.off("send message", handleMessage);
@@ -69,7 +70,7 @@ const MessageInput = ({ showEmoji }) => {
     formData.append("message", message);
     formData.append("receiverId", receiverId);
     formData.append("senderId", senderId);
-    
+
     if (file) {
       formData.append("attachment", file);
     }
@@ -79,9 +80,9 @@ const MessageInput = ({ showEmoji }) => {
         method: "POST",
         body: formData,
       });
-      
+
       const data = await response.json();
-      
+
       setSelectedImage(null);
       socket.emit("send message", data);
     } catch (error) {
@@ -97,10 +98,17 @@ const MessageInput = ({ showEmoji }) => {
       sendMessage();
     }
   };
-
+  const isTyping = useSelector((state) => state.isTyping);
   const handleOnChange = (e) => {
     setMessage(e.target.value);
-    socket.emit("typing", { val: e.target.value, receiverId });
+    const message = e.target.value;
+    if (message.length > 0) {
+      socket.emit("typing", { val: true, receiverId });
+      dispatch(setTyping(isTyping));
+    } else if (message.length === 0) {
+      socket.emit("typing", { val: false, receiverId });
+      dispatch(setTyping(isTyping));
+    }
   };
 
   return (
@@ -143,7 +151,11 @@ const MessageInput = ({ showEmoji }) => {
         )}
         {selectedImage && (
           <div className="absolute bottom-[10vh] h-[45vh] w-[30vw] bg-white py-3">
-            <img src={selectedImage} className="h-[35vh] w-full object-cover" alt="selected" />
+            <img
+              src={selectedImage}
+              className="h-[35vh] w-full object-cover"
+              alt="selected"
+            />
             <div className="w-full flex justify-end items-center mt-2">
               <span
                 onClick={sendMessage}

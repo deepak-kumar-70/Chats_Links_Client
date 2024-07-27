@@ -1,9 +1,9 @@
-import myimg from '../../assets/myimg.jpg'
+// import myimg from '../../assets/myimg.jpg'
 const userData=[
     {
         id:'1a',
         name:'Abhishek',
-        Avatar:myimg,
+       
         from_chat:[
           'Hello'
           
@@ -15,7 +15,7 @@ const userData=[
     {
         id:'2b',
         name:'Sister',
-        Avatar:myimg,
+       
         from_chat:[
           'Hello'
           
@@ -27,7 +27,7 @@ const userData=[
     {
         id:'3c',
         name:'Salaman',
-        Avatar:myimg,
+       
         from_chat:[
           'Kya hal hai'
           
@@ -39,7 +39,7 @@ const userData=[
     {
         id:'4d',
         name:'Brother',
-        Avatar:myimg,
+       
         from_chat:[
           'Hello'
           
@@ -51,7 +51,7 @@ const userData=[
     {
         id:'5es',
         name:'Sachin',
-        Avatar:myimg,
+       
         from_chat:[
           'hey brother'
           
@@ -63,7 +63,7 @@ const userData=[
     {
         id:'6f',
         name:'Abhishek',
-        Avatar:myimg,
+       
         from_chat:[
           'Hello'
           
@@ -75,7 +75,7 @@ const userData=[
     {
         id:'7g',
         name:'Sister',
-        Avatar:myimg,
+       
         from_chat:[
           'Hello'
           
@@ -87,7 +87,7 @@ const userData=[
     {
         id:'8h',
         name:'Salaman',
-        Avatar:myimg,
+       
         from_chat:[
           'Kya hal hai'
           
@@ -99,7 +99,7 @@ const userData=[
     {
         id:'4dn',
         name:'Brother',
-        Avatar:myimg,
+       
         from_chat:[
           'Hello'
           
@@ -111,7 +111,7 @@ const userData=[
     {
         id:'5e',
         name:'Sachin',
-        Avatar:myimg,
+       
         from_chat:[
           'hey brother'
           

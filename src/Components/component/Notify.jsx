@@ -1,7 +1,7 @@
 import { RxCross1 } from "react-icons/rx";
 import { FaCheck } from "react-icons/fa6";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect,} from "react";
 
 const Notify = ({ success,  message }) => {
   const [show, setShow] = useState(true);

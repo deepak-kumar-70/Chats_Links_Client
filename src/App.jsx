@@ -9,9 +9,12 @@ import Chattine from "./Components/UserConversasion/Chatting/Chatting";
 import { useDispatch } from "react-redux";
 import { handleReceiverId } from "./Store/slice";
 import { useSelector } from "react-redux";
+import VideoCall from "./Components/VideoCall/VideoCall"
+import IncomingCall from "./Components/component/IncomingCall";
 // import { useNavigate } from "react-router-dom";
 const App = () => {
   const receiverId = useSelector((state) => state.receiverId);
+  const isIncomingCall=useSelector((state)=>state.isInComingCall)
   const dispatch=useDispatch()
   // const navigate=useNavigate()
   useEffect(()=>{
@@ -19,15 +22,17 @@ const App = () => {
     if(id){
       dispatch(handleReceiverId(id))
     }
-    console.log(id, 'idloc');
+   
   })
   return (
-    <div>
+    <div> {isIncomingCall&&<div className="h-[60px] w-full z-50 absolute inset-0"><IncomingCall/></div>}
       <BrowserRouter>
         <Routes>
+        
           <Route exact path="/" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/singnup" element={<Signup />} />
+          <Route exact path="/videoCall" element={<VideoCall/>} />
           <Route
       exact
       path="/chat"

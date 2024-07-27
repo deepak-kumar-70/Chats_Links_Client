@@ -1,6 +1,6 @@
 
 import { FaUsers } from "react-icons/fa6";
-import statusIcon from "../../../assets/statusicon.webp";
+import statusIcon from "../../../assets/image/statusicon.webp";
 import { PiChatCircleText } from "react-icons/pi";
 import { MdAddComment } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";

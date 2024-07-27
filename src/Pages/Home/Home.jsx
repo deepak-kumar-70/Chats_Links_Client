@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { handleSenderId } from "../../Store/slice";
 import useWindowWidth from "../../Components/component/WindowWidth";
 import { useSelector } from "react-redux";
+import IncomingCall from "../../Components/component/IncomingCall";
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const Home = () => {
   }, [receiverId]);
   return (
     <div className="w-full fixed  bg-primary-hover h-screen flex ">
+   
       {isSmallScreen ? (
         <div className="h-full sm:w-[25%] w-full ">
           <Sidebar />

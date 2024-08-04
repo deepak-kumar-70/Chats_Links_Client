@@ -1,25 +1,14 @@
-import { useState } from "react"
-import Chattine from "../Chatting/Chatting"
-import Header from "../Header/Header"
-import WhatsappWindow from "../Chatting/WhatsappWindow"
-import { useSelector } from "react-redux"
-
-
-
+import WhatsappWindow from "../Chatting/WhatsappWindow";
 const UserCoversasion = () => {
-  const [isUserChat,setUserChat]=useState(true)
-  const receiverId=useSelector((state)=>state.receiverId)
   return (
     <div>
-    {
-      
-     
-      <div><WhatsappWindow/></div>
-    }
-    
+      {
+        <div>
+          <WhatsappWindow />
+        </div>
+      }
     </div>
+  );
+};
 
-  )
-}
-
-export default UserCoversasion
+export default UserCoversasion;

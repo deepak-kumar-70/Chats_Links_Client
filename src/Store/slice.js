@@ -10,15 +10,16 @@ const initialState = {
   Inputval: "",
   searchVal: "",
   receiverId: "",
-  senderId: "",
+  senderId: "",  
   socketMessage: [],
   serchBack: false,
   userOnlineStatus: "Offline",
   isTyping: false,
-  isInComingCall:,
+  isInComingCall:false,
   isVideoCall: false,
   isVideoCallAccepted:false,
   isVideoCallRejected: false,
+  offer:''
 };
 const Slice = createSlice({
   name: "whatsapp",
@@ -59,16 +60,13 @@ const Slice = createSlice({
     },
     isVideoCallAccepted(state,action){
       state.isVideoCallAccepted=action.payload;
-      if(state.isVideoCallAccepted){
-        state.isVideoCall=true
-      }
     },
     isVideoCallRejected(state,action){
       state.isVideoCallRejected=action.payload
-      if(state.isVideoCallRejected){
-        state.isVideoCall=false
-      }
     },
+    handleOffer(state,action){
+       state.offer=action.payload
+    }
 
   },
 });
@@ -87,5 +85,6 @@ export const {
   inComingVideoCall,
   isVideoCallAccepted,
   isVideoCallRejected,
-  isInComingCall
+  isInComingCall,
+  handleOffer
 } = Slice.actions;

@@ -6,16 +6,27 @@ import { CgArrowUpR } from "react-icons/cg";
 import { IoCallOutline } from "react-icons/io5";
 import ringtone from "../../assets/audio/ringtone.mp3";
 import { useDispatch, useSelector } from "react-redux";
-import { inComingVideoCall, isInComingCall } from "../../Store/slice";
+import {
+  handleOffer,
+  inComingVideoCall,
+  isInComingCall,
+  isVideoCallAccepted,
+} from "../../Store/slice";
 import useWebRTC from "../Hook/WebRtc";
 import { socket } from "../../Store/slice";
+
 const VideoCall = () => {
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const audioRef = useRef(null);
   const dispatch = useDispatch();
-  const isVideoCallAccepted = useSelector((state) => state.isVideoCallAccepted);
-  const { peer } = useWebRTC;
+  const isVideoCallAccepteds = useSelector(
+    (state) => state.isVideoCallAccepted
+  );
+  const senderId = useSelector((state) => state.senderId);
+  const receiverId = useSelector((state) => state.receiverId);
+  const { peer, handleICECandidate, handleLocalStream, remoteStream } =
+    useWebRTC;
 
   useEffect(() => {
     navigator.mediaDevices
@@ -23,22 +34,35 @@ const VideoCall = () => {
       .then((stream) => {
         if (localVideoRef.current) {
           localVideoRef.current.srcObject = stream;
-        }
-        if (peer) {
-          stream.getTracks().forEach((track) => peer.addTrack(track, stream));
+          handleLocalStream(stream);
         }
       })
       .catch((err) => {
         console.error("Error accessing the camera: ", err);
       });
-   
-    
+
+    const handleReceiveCall = ({ from, to, offer }) => {
+      dispatch(isInComingCall(true));
+      dispatch(handleOffer(offer));
+    };
+
+    const handleAnswer = ({ from, to, answer }) => {
+      dispatch(isVideoCallAccepted(true));
+
+      peer.setRemoteDescription(new RTCSessionDescription(answer));
+    };
+    const handleIceCandidate = ({ from, to, candidate }) => {
+      handleICECandidate(candidate);
+    };
+    socket.on("receive_call", handleReceiveCall);
+    socket.on("receive_answer", handleAnswer);
+    socket.on("receive_ice_Candidate", handleIceCandidate);
     if (audioRef.current) {
-      audioRef.current.play();
+      audioRef.current.pause();
     }
 
-  
     return () => {
+      // socket.off("receive_call", handleReceiveCall);
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
@@ -59,28 +83,29 @@ const VideoCall = () => {
   }, [peer]);
 
   const handleEndCall = () => {
-    if (window.confirm("Are you sure you want to end the call?")) {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-      }
-      if (localVideoRef.current && localVideoRef.current.srcObject) {
-        localVideoRef.current.srcObject
-          .getTracks()
-          .forEach((track) => track.stop());
-        localVideoRef.current.srcObject = null;
-      }
-      if (remoteVideoRef.current && remoteVideoRef.current.srcObject) {
-        remoteVideoRef.current.srcObject
-          .getTracks()
-          .forEach((track) => track.stop());
-        remoteVideoRef.current.srcObject = null;
-      }
-      dispatch(inComingVideoCall(false));
+    // if (window.confirm("Are you sure you want to end the call?")) {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
     }
+    if (localVideoRef.current && localVideoRef.current.srcObject) {
+      localVideoRef.current.srcObject
+        .getTracks()
+        .forEach((track) => track.stop());
+      localVideoRef.current.srcObject = null;
+    }
+    if (remoteVideoRef.current && remoteVideoRef.current.srcObject) {
+      remoteVideoRef.current.srcObject
+        .getTracks()
+        .forEach((track) => track.stop());
+      remoteVideoRef.current.srcObject = null;
+    }
+    dispatch(inComingVideoCall(false));
+    dispatch(isVideoCallAccepted(false));
+    // }
   };
 
-  return isVideoCallAccepted ? (
+  return isVideoCallAccepteds ? (
     <div className="w-[34vw] absolute inset-0 z-40 h-[95vh] bg-neutral-900 left-[35%] top-[2%] rounded-xl overflow-hidden">
       <video
         className="w-full h-full object-cover relative"
@@ -91,6 +116,7 @@ const VideoCall = () => {
       <video
         className="w-[150px] h-[100px] object-cover top-0 right-0 absolute"
         ref={remoteVideoRef}
+        src={remoteStream}
         autoPlay
         muted={false}
         id="remoteVideo"

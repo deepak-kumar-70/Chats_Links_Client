@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { socket } from "../../Store/slice";
 
 const useWebRTC = () => {
   const [peer, setPeer] = useState(null);
-  const dispatch = useDispatch();
+  const [remoteStream, setRemoteStream] = useState(null);
   const senderId = useSelector((state) => state.senderId);
   const receiverId = useSelector((state) => state.receiverId);
 
@@ -23,72 +23,78 @@ const useWebRTC = () => {
 
       newPeer.onicecandidate = (event) => {
         if (event.candidate) {
-          socket.emit("ice_Candidate", event.candidate);
+          socket.emit("ice-candidate", {
+            from: senderId,
+            to: receiverId,
+            candidate: event.candidate,
+          });
         }
+      };
+
+      newPeer.ontrack = (event) => {
+        const [stream] = event.streams;
+        setRemoteStream(stream);
       };
 
       return newPeer;
     };
 
-    if (!peer) {
-      setPeer(createPeer());
-    } else if (peer.signalingState === "closed") {
-      // Recreate peer connection if it's closed
-      setPeer(createPeer());
-    }
+    const peerInstance = createPeer();
+    setPeer(peerInstance);
 
-    // Cleanup function to stop the peer connection
     return () => {
-      if (peer) {
-        peer.close();
-      }
+      peerInstance.close();
+      setPeer(null);
     };
-  }, [peer, dispatch]);
+  }, [senderId, receiverId]);
 
   const createOffer = async () => {
+    if (!peer) return;
+
     try {
-      if (peer && peer.signalingState !== "closed") {
-        const offer = await peer.createOffer();
-        console.log(offer);
-        await peer.setLocalDescription(new RTCSessionDescription(offer));
-        socket.emit("offer_call", {
-          from: senderId,
-          to: receiverId,
-          offer: offer,
-        });
-        return offer;
-      } else {
-        console.error("Peer connection is closed or not initialized");
-      }
+      const offer = await peer.createOffer();
+      await peer.setLocalDescription(offer);
+      socket.emit("offer_call", {
+        from: senderId,
+        to: receiverId,
+        offer,
+      });
+      return offer;
     } catch (error) {
       console.error("Error creating offer:", error);
     }
   };
 
   const createAnswer = async (incomingOffer) => {
-    console.log(incomingOffer,'in')
+    if (!peer) return;
+
     try {
-      if (peer && peer.signalingState !== "closed") {
-        await peer.setRemoteDescription(
-          new RTCSessionDescription(incomingOffer)
-        );
-        const answer = await peer.createAnswer();
-        await peer.setLocalDescription(new RTCSessionDescription(answer));
-        socket.emit("answer_call", {
-          from: senderId,
-          to: receiverId,
-          answer: answer,
-        });
-        return answer;
-      } else {
-        console.error("Peer connection is closed or not initialized");
-      }
+      const remoteDescription = new RTCSessionDescription(incomingOffer);
+      await peer.setRemoteDescription(remoteDescription);
+      const answer = await peer.createAnswer();
+      await peer.setLocalDescription(answer);
+      socket.emit("answer_call", {
+        from: senderId,
+        to: receiverId,
+        answer,
+      });
+      return answer;
     } catch (error) {
       console.error("Error creating answer:", error);
     }
   };
 
-  return { peer, createOffer, createAnswer };
+  const handleLocalStream = (stream) => {
+    stream.getTracks().forEach((track) => peer.addTrack(track, stream));
+  };
+
+  const handleICECandidate = (candidate) => {
+    if (peer) {
+      peer.addIceCandidate(new RTCIceCandidate(candidate));
+    }
+  };
+
+  return { peer, createOffer, createAnswer, handleICECandidate, handleLocalStream, remoteStream };
 };
 
 export default useWebRTC;

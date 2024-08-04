@@ -16,7 +16,6 @@ const useGetApi = (url) => {
         const jsonData = await response.json();
         if (jsonData) {
           setData(jsonData);
-          console.log(jsonData.user.avatar, 'data');
         }
       } catch (err) {
         setError(err.message);

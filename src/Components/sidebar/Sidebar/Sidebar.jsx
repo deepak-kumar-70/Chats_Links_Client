@@ -11,7 +11,7 @@ const Sidebar = () => {
     if(id){
       dispatch(handleReceiverId(id))
     }
-    console.log(id, 'idloc');
+  
   })
   return (
     <div className="border-r-[1px] border-r-neutral-300 ">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { BsEmojiSmile } from "react-icons/bs";
 import { IoMdAttach } from "react-icons/io";
 import { LuMic } from "react-icons/lu";

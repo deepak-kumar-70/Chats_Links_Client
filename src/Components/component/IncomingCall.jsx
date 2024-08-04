@@ -4,30 +4,24 @@ import { HiOutlineVideoCamera } from "react-icons/hi2";
 import { motion } from "framer-motion";
 import ringtone from "../../assets/audio/ringtone.mp3";
 import useWebRTC from "../Hook/WebRtc";
-import { useDispatch } from "react-redux";
-import { isInComingCall, isVideoCallAccepted } from "../../Store/slice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  isInComingCall,
+  isVideoCallAccepted,
+  inComingVideoCall,
+} from "../../Store/slice";
 import { socket } from "../../Store/slice";
+import VideoCall from "../VideoCall/VideoCall";
 
 const IncomingCall = () => {
   const [show, setShow] = useState(true);
   const [timeLeft, setTimeLeft] = useState(5);
-  const [offer, setOffer] = useState('');
+
   const audioRef = useRef(null);
   const dispatch = useDispatch();
-  const { createAnswer } = useWebRTC();
-
-  useEffect(() => {
-    const handleReceiveCall = ({ from,to, offer }) => {
-      dispatch(isInComingCall(true));
-      setOffer(offer);
-    };
-
-    socket.on('receive_call', handleReceiveCall);
-
-    return () => {
-      socket.off('receive_call', handleReceiveCall);
-    };
-  }, [dispatch]);
+  const { peer, createAnswer } = useWebRTC();
+  const offer = useSelector((state) => state.offer);
+  const isvideoAccepted = useSelector((state) => state.isVideoCallAccepted);
 
   const handleClose = () => {
     setShow(false);
@@ -39,10 +33,10 @@ const IncomingCall = () => {
   };
 
   const handleAnswerCall = async () => {
-    handleClose();
-    dispatch(isInComingCall(false));
-    dispatch(isVideoCallAccepted(true));
     await createAnswer(offer);
+    dispatch(inComingVideoCall(true));
+    dispatch(isVideoCallAccepted(true));
+    handleClose();
   };
 
   useEffect(() => {
@@ -52,12 +46,12 @@ const IncomingCall = () => {
     }
 
     if (audioRef.current) {
-      audioRef.current.play();
+      audioRef.current.pause();
     }
 
     const timer = setTimeout(() => {
       setTimeLeft(timeLeft - 1);
-    }, 3000); // 3 seconds interval
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [timeLeft]);

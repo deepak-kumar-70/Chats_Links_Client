@@ -14,7 +14,7 @@ const Chattine = () => {
   const senderId = useSelector((state)=>state.senderId)
   const receiverId = useSelector((state) => state.receiverId);
   const socketMessage = useSelector((state) => state.socketMessage);
-  const headerHeight=useSelector((state)=>state.headerHeight)
+  // const headerHeight=useSelector((state)=>state.headerHeight)
   const chatContainerRef = useRef(null);
  const dispath=useDispatch()
   useEffect(() => {
@@ -40,7 +40,7 @@ const Chattine = () => {
   }, [senderId, receiverId]);
 
   useEffect(() => {
-    console.log(socketMessage,'sm')
+  
     setCombinedData([...userData, ...socketMessage]);
     socket.on("messageTick", (data) => {
       console.log(data, "tick");

@@ -5,9 +5,9 @@ import datas from "../../Data/UserData";
 import { useSelector } from "react-redux";
 import useGetApi from "../../api";
 import { backendUrl, inComingVideoCall } from "../../../Store/slice";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useRef } from "react";
+// import { useRef } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoMdArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
@@ -19,12 +19,12 @@ const Header = () => {
   const OnlineStatus = useSelector((state) => state.userOnlineStatus);
   const isTyping = useSelector((state) => state.isTyping);
   const receiverId = useSelector((state) => state.receiverId);
-  const senderId = useSelector((state) => state.senderId);
+  // const senderId = useSelector((state) => state.senderId);
   const apiUrl = `${backendUrl}/user/getmyprofile/${receiverId}`;
+  // const isInComingCall=useSelector((state)=>state.isInComingCall)
   const { data } = useGetApi(apiUrl);
   const isVideoCall=useSelector((state)=>state.isVideoCall)
   const handleVideoCall=async()=>{
-  
     dispatch(inComingVideoCall(true))
     await createOffer()
   }
